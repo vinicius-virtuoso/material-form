@@ -40,6 +40,18 @@ input:-webkit-autofill {
   opacity: 0.8;
   color: #d32f2f;
 }
+.title {
+  font-size: 46px;
+  font-weight: normal;
+  margin-bottom: 20px;
+  color: #f4f4f4;
+}
+.g-title {
+  font-size: 86px;
+
+  margin-bottom: 20px;
+  color: #f4f4f4;
+}
 
 @media (max-width: 768px) {
   .App {

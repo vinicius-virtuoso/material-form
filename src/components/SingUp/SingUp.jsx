@@ -28,7 +28,7 @@ function SignUp({ setData }) {
       .required("Aceite os termos de uso para prosseguir")
       .matches("true", "Aceite os termos de uso para prosseguir"),
     userName: yup.string().required("Nome de usuário obrigatório!"),
-    name: yup.string().required("Nome de usuário obrigatório!"),
+    name: yup.string().required("Nome completo obrigatório!"),
 
     email: yup.string().required("Email obrigatório*").email("Email invalido"),
     confirmEmail: yup
@@ -67,7 +67,7 @@ function SignUp({ setData }) {
 
   return (
     <form className="form-box" onSubmit={handleSubmit(submitForm)}>
-      <h2 className="form-title">Crie sua conta!</h2>
+      <h2 className="title">Crie sua conta!</h2>
       <Box className="input-group">
         <TextField
           className="b-white"

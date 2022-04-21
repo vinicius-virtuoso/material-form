@@ -6,11 +6,6 @@
   flex-direction: column;
   color: #fff;
 }
-.form-title {
-  font-size: 46px;
-  font-weight: normal;
-  margin-bottom: 20px;
-}
 .input-group {
   display: flex;
   flex-direction: column;

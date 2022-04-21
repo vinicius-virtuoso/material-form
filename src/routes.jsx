@@ -1,30 +1,25 @@
-import { useHistory } from "react-router-dom";
 import { Switch, Route } from "react-router-dom";
-import { Button } from "@mui/material";
 import SignUp from "./components/SingUp/SingUp";
 import User from "./components/User";
+import NotFound from "./components/NotFound";
 
 const Routes = ({ data, setData }) => {
-  const history = useHistory();
+  console.log(data);
   return (
     <Switch>
       <Route exact path="/">
         <SignUp setData={setData} />
       </Route>
-      <Route exact path="/user/:id">
-        <User data={data} />
-      </Route>
-      <Route exact path="/*">
-        <h1>Pagina não encontrada</h1>
-        <Button
-          className="btn"
-          color="secondary"
-          variant="contained"
-          onClick={() => history.push("/")}
-        >
-          Voltar
-        </Button>
-      </Route>
+
+      {data && data?.name ? (
+        <Route exact path="/user/:id">
+          <User data={data} />
+        </Route>
+      ) : (
+        <Route exact path="/*">
+          <NotFound />
+        </Route>
+      )}
     </Switch>
   );
 };
