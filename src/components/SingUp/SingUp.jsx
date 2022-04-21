@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Box } from "@mui/system";
 
 import {
@@ -6,8 +8,7 @@ import {
   FormControlLabel,
   Checkbox,
   Link,
-  ThemeProvider,
-  createTheme,
+  CircularProgress,
 } from "@mui/material";
 
 import * as yup from "yup";
@@ -16,7 +17,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import "./style.css";
 
-function SignUp() {
+function SignUp({ setData }) {
+  const [loading, setLoading] = useState(false);
+
+  const history = useHistory();
+
   const formSchema = yup.object().shape({
     checkInput: yup
       .string()
@@ -52,117 +57,113 @@ function SignUp() {
   });
 
   const submitForm = (data) => {
-    //Enviar para api ou consultar na api
-    console.log(data);
+    setData(data);
+    setLoading(true);
+    setTimeout(() => {
+      history.push(`user/${data.userName}`);
+      setLoading(false);
+    }, 1000);
   };
 
-  const theme = createTheme({
-    typography: {
-      fontSize: 16,
-    },
-    palette: {
-      primary: {
-        main: "#FF8C61",
-        light: "#fff",
-        dark: "#fff",
-      },
-    },
-  });
-
   return (
-    <ThemeProvider theme={theme}>
-      <form className="form-box" onSubmit={handleSubmit(submitForm)}>
-        <Box className="input-group">
-          <TextField
-            className="b-white"
-            fullWidth
-            id="username"
-            label="Nome de usuário*"
-            variant="outlined"
-            {...register("userName")}
-            error={errors.userName && true}
-            helperText={errors.userName && errors.userName.message}
-          />
-          <TextField
-            className="b-white"
-            fullWidth
-            id="setFullNameUser"
-            label="Nome completo*"
-            variant="outlined"
-            {...register("name")}
-            error={errors.name && true}
-            helperText={errors.name && errors.name.message}
-          />
-        </Box>
-        <Box className="input-group">
-          <TextField
-            className="b-white"
-            fullWidth
-            id="email"
-            label="Endereço de Email*"
-            variant="outlined"
-            {...register("email")}
-            error={errors.email && true}
-            helperText={errors.email?.message}
-          />
-          <TextField
-            className="b-white"
-            fullWidth
-            id="confirmEmail"
-            label="Confirme seu Email*"
-            variant="outlined"
-            {...register("confirmEmail")}
-            error={errors.confirmEmail && true}
-            helperText={errors.confirmEmail?.message}
-          />
-        </Box>
-        <Box className="input-group flex-group">
-          <TextField
-            className="b-white"
-            id="password"
-            label="Senha*"
-            variant="outlined"
-            type="password"
-            {...register("password")}
-            error={errors.password && true}
-            helperText={errors.password?.message}
-          />
-          <TextField
-            className="b-white"
-            id="confirmPassword"
-            label="Confirme sua senha*"
-            variant="outlined"
-            type="password"
-            {...register("confirmPassword")}
-            error={errors.confirmPassword && true}
-            helperText={errors.confirmPassword?.message}
-          />
-        </Box>
-        <Box>
-          <FormControlLabel
-            className="j-c"
-            control={
-              <>
-                <Checkbox
-                  color="primary"
-                  id="checkInput"
-                  {...register("checkInput")}
-                />
-              </>
-            }
-            label="Eu aceito os termos de uso da aplicação."
-          />
-          <small className="error-small">{errors.checkInput?.message}</small>
-        </Box>
+    <form className="form-box" onSubmit={handleSubmit(submitForm)}>
+      <h2 className="form-title">Crie sua conta!</h2>
+      <Box className="input-group">
+        <TextField
+          className="b-white"
+          fullWidth
+          id="username"
+          label="Nome de usuário*"
+          variant="outlined"
+          {...register("userName")}
+          error={errors.userName && true}
+          helperText={errors.userName && errors.userName.message}
+        />
+        <TextField
+          className="b-white"
+          fullWidth
+          id="setFullNameUser"
+          label="Nome completo*"
+          variant="outlined"
+          {...register("name")}
+          error={errors.name && true}
+          helperText={errors.name && errors.name.message}
+        />
+      </Box>
+      <Box className="input-group">
+        <TextField
+          className="b-white"
+          fullWidth
+          id="email"
+          label="Endereço de Email*"
+          variant="outlined"
+          {...register("email")}
+          error={errors.email && true}
+          helperText={errors.email?.message}
+        />
+        <TextField
+          className="b-white"
+          fullWidth
+          id="confirmEmail"
+          label="Confirme seu Email*"
+          variant="outlined"
+          {...register("confirmEmail")}
+          error={errors.confirmEmail && true}
+          helperText={errors.confirmEmail?.message}
+        />
+      </Box>
+      <Box className="input-group flex-group">
+        <TextField
+          className="b-white"
+          id="password"
+          label="Senha*"
+          variant="outlined"
+          type="password"
+          {...register("password")}
+          error={errors.password && true}
+          helperText={errors.password?.message}
+        />
+        <TextField
+          className="b-white"
+          id="confirmPassword"
+          label="Confirme sua senha*"
+          variant="outlined"
+          type="password"
+          {...register("confirmPassword")}
+          error={errors.confirmPassword && true}
+          helperText={errors.confirmPassword?.message}
+        />
+      </Box>
+      <Box>
+        <FormControlLabel
+          className="j-c"
+          control={
+            <>
+              <Checkbox
+                color="primary"
+                id="checkInput"
+                {...register("checkInput")}
+              />
+            </>
+          }
+          label="Eu aceito os termos de uso da aplicação."
+        />
+        <small className="error-small">{errors.checkInput?.message}</small>
+      </Box>
 
+      {loading ? (
+        <Button className="btn" variant="contained" disabled type="submit">
+          <CircularProgress color="inherit" />
+        </Button>
+      ) : (
         <Button className="btn" variant="contained" type="submit">
           Cadastrar
         </Button>
-        <Link href="#" variant="body4">
-          Já possui uma conta?
-        </Link>
-      </form>
-    </ThemeProvider>
+      )}
+      <Link href="#" variant="body4">
+        Já possui uma conta?
+      </Link>
+    </form>
   );
 }
 

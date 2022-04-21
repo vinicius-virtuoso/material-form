@@ -1,11 +1,12 @@
+import { useState } from "react";
 import "./App.css";
-import SignUp from "./components/SingUp/SingUp";
+import Routes from "./routes";
 
 function App() {
+  const [data, setData] = useState({});
   return (
     <div className="App container">
-      <h1 className="crate">Crie sua conta!</h1>
-      <SignUp />
+      <Routes data={data} setData={setData} />
     </div>
   );
 }

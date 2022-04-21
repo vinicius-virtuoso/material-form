@@ -1,9 +1,15 @@
 .form-box {
+  width: 100%;
   max-width: 400px;
   gap: 20px;
   display: flex;
   flex-direction: column;
   color: #fff;
+}
+.form-title {
+  font-size: 46px;
+  font-weight: normal;
+  margin-bottom: 20px;
 }
 .input-group {
   display: flex;
@@ -24,10 +30,11 @@
 .b-white input,
 .b-white fieldset {
   color: #fff;
-  border-color: rgba(218, 218, 218, 0.116);
+  border-color: rgba(34, 102, 190, 0.171);
 }
-.b-white label {
-  color: rgb(218, 218, 218);
+
+label {
+  color: rgb(218, 218, 218) !important;
   letter-spacing: 1px;
   font-size: 12px;
 }
